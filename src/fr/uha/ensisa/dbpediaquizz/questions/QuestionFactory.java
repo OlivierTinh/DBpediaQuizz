@@ -1,15 +1,23 @@
 package fr.uha.ensisa.dbpediaquizz.questions;
 
 public class QuestionFactory {
-
-	/**
-	 * Renvoie une instance d'une sous-classe de la classe Question. Le choix de la sous-classe instanciée est aléatoire.
-	 * @return
-	 */
-	public static Question createQuestion()
-	{
-		//À compléter
-		return null;
+	public QuestionFactory() {
 	}
-	
+
+	public static Question createQuestion() {
+		int questionType = (int)(Math.random() * 3.0D);
+		Object question;
+		switch(questionType) {
+			case 0:
+				question = new QuestionCapitale();
+				break;
+			case 1:
+				question = new QuestionRoiEtPredecesseur();
+				break;
+			default:
+				question = new QuestionChampionnatFranceFootball();
+		}
+
+		return (Question)question;
+	}
 }
