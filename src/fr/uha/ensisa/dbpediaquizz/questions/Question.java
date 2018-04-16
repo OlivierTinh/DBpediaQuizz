@@ -62,8 +62,8 @@ public abstract class Question {
         if (this.bonneReponse.equalsIgnoreCase(nouvelleReponse)) {
             absent = false;
         } else {
-            for(int i = 0; i < this.mauvaisesReponses.length; ++i) {
-                if (this.mauvaisesReponses[i] != null && this.mauvaisesReponses[i].equalsIgnoreCase(nouvelleReponse)) {
+            for (String mauvaisesReponse : this.mauvaisesReponses) {
+                if (mauvaisesReponse != null && mauvaisesReponse.equalsIgnoreCase(nouvelleReponse)) {
                     absent = false;
                 }
             }
