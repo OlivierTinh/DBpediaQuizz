@@ -3,11 +3,12 @@ package fr.uha.ensisa.dbpediaquizz;
 import fr.uha.ensisa.dbpediaquizz.questions.Question;
 import fr.uha.ensisa.dbpediaquizz.questions.QuestionFactory;
 import javafx.application.Application;
-import javafx.scene.Group;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class DBpediaQuizz extends Application {
@@ -15,11 +16,12 @@ public class DBpediaQuizz extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
-        Group root = new Group();
+    public void start(Stage primaryStage) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/interface.fxml"));
+        Scene scene = new Scene(root);
 
         primaryStage.setTitle("Qui veut gagner un pignouf");
-        primaryStage.setScene(new Scene(root, 400, 300, Color.BEIGE));
+        primaryStage.setScene(scene);
         primaryStage.show();
 
         //doConsoleStuff();
