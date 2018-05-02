@@ -1,5 +1,6 @@
 package fr.uha.ensisa.dbpediaquizz.questions;
 
+import fr.uha.ensisa.dbpediaquizz.fxml.InterfaceController;
 import fr.uha.ensisa.dbpediaquizz.util.Constantes;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -15,9 +16,47 @@ public abstract class Question {
         this.mauvaisesReponses = new String[3];
     }
 
+    public int ask(InterfaceController controller) {
+        String[] reponses = new String[4];
+        Arrays.fill(reponses, null);
+        int bonneReponseIndex = (int)(Math.random() * 4.0D);
+        reponses[bonneReponseIndex] = this.bonneReponse;
+        int mauvaisesReponsesPlacees = 0;
+
+        int choix;
+        while(mauvaisesReponsesPlacees < 3) {
+            choix = (int)(Math.random() * 4.0D);
+            if (reponses[choix] == null) {
+                reponses[choix] = this.mauvaisesReponses[mauvaisesReponsesPlacees];
+                ++mauvaisesReponsesPlacees;
+            }
+        }
+
+        controller.setMatiere(Constantes.CATEGORIES[this.categorie]);
+        controller.setQuestion(this.enonce);
+
+        for(choix = 0; choix < 4; ++choix) {
+            controller.setAnswer(choix + 1, reponses[choix]);
+        }
+
+        // TODO: attendre que la personne ait cliqué sur un des boutons
+
+        int score = 0;
+        if (choix == bonneReponseIndex + 1) {
+            // TODO: controller bonne réponse
+            System.out.println("BRAVO VOUS AVEZ TROUVÉ LA BONNE RÉPONSE !");
+            score = 1;
+        } else {
+            // TODO: controller mauvaise réponse
+            System.out.println("NON, LA BONNE RÉPONSE ÉTAIT : " + this.bonneReponse);
+        }
+
+        return score;
+    }
+
     public int ask(Scanner entry) {
         String[] reponses = new String[4];
-        Arrays.fill(reponses, (Object)null);
+        Arrays.fill(reponses, null);
         int bonneReponseIndex = (int)(Math.random() * 4.0D);
         reponses[bonneReponseIndex] = this.bonneReponse;
         int mauvaisesReponsesPlacees = 0;

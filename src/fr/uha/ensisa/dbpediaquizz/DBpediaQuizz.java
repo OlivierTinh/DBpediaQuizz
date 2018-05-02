@@ -1,7 +1,9 @@
 package fr.uha.ensisa.dbpediaquizz;
 
+import fr.uha.ensisa.dbpediaquizz.fxml.InterfaceController;
 import fr.uha.ensisa.dbpediaquizz.questions.Question;
 import fr.uha.ensisa.dbpediaquizz.questions.QuestionFactory;
+import fr.uha.ensisa.dbpediaquizz.util.Constantes;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,24 +14,34 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class DBpediaQuizz extends Application {
-    public DBpediaQuizz() {
-    }
 
+    private static int currentQuestion = 0;
+    private static int score = 0;
+
+    // Mode graphique
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("fxml/interface.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/Interface.fxml"));
+        Parent root = fxmlLoader.load();
+        InterfaceController controller = fxmlLoader.getController();
         Scene scene = new Scene(root);
+
+        controller.setAnswer(1, "LA MER NOIRE");
+        controller.setAnswer(2, "Le roi Pamplemousse");
+        controller.setAnswer(3, "François Hollande");
+        controller.setAnswer(4, "La réponse D");
 
         primaryStage.setTitle("Qui veut gagner un pignouf");
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        //doConsoleStuff();
+        Question question = QuestionFactory.createQuestion();
+        score += question.ask(controller);
+        controller.setScoreText(score);
     }
 
-    private void doConsoleStuff() {
-        int currentQuestion = 0;
-        int score = 0;
+    // Mode console
+    private static void launchConsole() {
         Scanner entry = new Scanner(System.in);
         System.out.println("******* DBpedia Quizz *******");
         System.out.println("C'est parti pour 10 questions !");
@@ -50,6 +62,16 @@ public class DBpediaQuizz extends Application {
     }
 
     public static void main(String[] args) {
-        Application.launch(DBpediaQuizz.class, args);
+        int mode = 1;
+
+        switch (mode) {
+            case Constantes.MODE_CONSOLE:
+                launchConsole();
+                break;
+            case Constantes.MODE_GRAPHIQUE:
+                Application.launch(DBpediaQuizz.class, args);
+                break;
+        }
+
     }
 }
