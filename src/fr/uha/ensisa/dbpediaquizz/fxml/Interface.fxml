@@ -24,7 +24,7 @@
          </padding></JFXToolbar>
       <JFXToolbar layoutX="-4.0" prefHeight="800.0" prefWidth="230.0" style="-fx-background-color: #e6e6e6;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="64.0">
          <top>
-            <JFXButton focusTraversable="false" text="Nouvelle partie" BorderPane.alignment="CENTER">
+            <JFXButton focusTraversable="false" prefHeight="35.0" prefWidth="230.0" text="Nouvelle partie" BorderPane.alignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>

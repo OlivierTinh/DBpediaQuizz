@@ -42,7 +42,6 @@ public abstract class Question {
     }
 
     public boolean isCorrect(String answer) {
-        System.out.println("- " + bonneReponse);
         return answer.equals(bonneReponse);
     }
 
@@ -102,4 +101,5 @@ public abstract class Question {
 
         return absent;
     }
+
 }
