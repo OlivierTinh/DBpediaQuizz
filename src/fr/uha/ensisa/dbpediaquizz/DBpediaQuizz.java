@@ -26,18 +26,14 @@ public class DBpediaQuizz extends Application {
         InterfaceController controller = fxmlLoader.getController();
         Scene scene = new Scene(root);
 
-        controller.setAnswer(1, "LA MER NOIRE");
-        controller.setAnswer(2, "Le roi Pamplemousse");
-        controller.setAnswer(3, "François Hollande");
-        controller.setAnswer(4, "La réponse D");
-
         primaryStage.setTitle("Qui veut gagner un pignouf");
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        Question question = QuestionFactory.createQuestion();
-        score += question.ask(controller);
+        controller.setQuestion(QuestionFactory.createQuestion());
+        controller.getQuestion().display(controller);
         controller.setScoreText(score);
+        controller.setQuestionNumberLabel(currentQuestion);
     }
 
     // Mode console

@@ -16,7 +16,8 @@ public abstract class Question {
         this.mauvaisesReponses = new String[3];
     }
 
-    public int ask(InterfaceController controller) {
+    public void display(InterfaceController controller) {
+        // setup
         String[] reponses = new String[4];
         Arrays.fill(reponses, null);
         int bonneReponseIndex = (int)(Math.random() * 4.0D);
@@ -33,25 +34,21 @@ public abstract class Question {
         }
 
         controller.setMatiere(Constantes.CATEGORIES[this.categorie]);
-        controller.setQuestion(this.enonce);
+        controller.setQuestionLabel(this.enonce);
 
         for(choix = 0; choix < 4; ++choix) {
             controller.setAnswer(choix + 1, reponses[choix]);
         }
+    }
 
-        // TODO: attendre que la personne ait cliqué sur un des boutons
-
-        int score = 0;
-        if (choix == bonneReponseIndex + 1) {
-            // TODO: controller bonne réponse
-            System.out.println("BRAVO VOUS AVEZ TROUVÉ LA BONNE RÉPONSE !");
-            score = 1;
+    public boolean isCorrect(String answer) {
+        if (answer.equals(bonneReponse)) {
+            System.out.println("SEHR GUT");
+            return true;
         } else {
-            // TODO: controller mauvaise réponse
-            System.out.println("NON, LA BONNE RÉPONSE ÉTAIT : " + this.bonneReponse);
+            System.out.println("SEHR SHIT");
+            return false;
         }
-
-        return score;
     }
 
     public int ask(Scanner entry) {

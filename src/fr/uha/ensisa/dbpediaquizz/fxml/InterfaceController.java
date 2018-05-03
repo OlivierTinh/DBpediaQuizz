@@ -1,6 +1,7 @@
 package fr.uha.ensisa.dbpediaquizz.fxml;
 
 import com.jfoenix.controls.JFXButton;
+import fr.uha.ensisa.dbpediaquizz.questions.Question;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,11 +13,18 @@ import java.util.ResourceBundle;
 
 public class InterfaceController implements Initializable {
 
+    private Question question;
+    private int score = 0;
+    private int questionNumber = 0;
+
     @FXML
     private Text scoreText;
 
     @FXML
-    private Label question;
+    private Label questionNumberLabel;
+
+    @FXML
+    private Label questionLabel;
 
     @FXML
     private JFXButton fieldText;
@@ -35,12 +43,32 @@ public class InterfaceController implements Initializable {
 
     @FXML
     void handleAnswerButton(ActionEvent event) {
-        System.out.println(event);
+        String answer = event.getSource().toString().replaceAll(".*'(.*?)'", "$1");
+        setQuestionNumberLabel(++questionNumber);
+
+        if (question.isCorrect(answer))
+            handleCorrectAnswer();
+        else
+            handleFalseAnswer();
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {}
 
+    private void handleCorrectAnswer() {
+        setScoreText(++score);
+    }
+
+    private void handleFalseAnswer() {
+
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
     public void setAnswer(int index, String answer) {
@@ -66,12 +94,16 @@ public class InterfaceController implements Initializable {
         this.fieldText.setText(matiere);
     }
 
-    public void setQuestion(String question) {
-        this.question.setText(question);
+    public void setQuestionLabel(String question) {
+        this.questionLabel.setText(question);
+    }
+
+    public void setQuestionNumberLabel(int nb) {
+        this.questionNumberLabel.setText("Question " + nb + "/10");
     }
 
     public void setScoreText(int score) {
-        this.scoreText.setText("Score  >>  " + score + "/10");
+        this.scoreText.setText("Score : " + score);
     }
 
 }
