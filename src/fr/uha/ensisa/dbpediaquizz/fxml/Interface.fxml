@@ -5,24 +5,19 @@
 <?import com.jfoenix.controls.JFXToolbar?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.uha.ensisa.dbpediaquizz.fxml.InterfaceController">
    <children>
-      <JFXToolbar layoutX="486.0" layoutY="82.0" prefHeight="32.0" style="-fx-background-color: #004ba0;" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
-         <left>
-            <Text fx:id="scoreText" fill="#e6e6e6" strokeType="OUTSIDE" strokeWidth="0.0" text="Score" BorderPane.alignment="CENTER" />
-         </left>
-         <padding>
-            <Insets left="16.0" />
-         </padding></JFXToolbar>
-      <JFXToolbar layoutX="-4.0" prefHeight="800.0" prefWidth="230.0" style="-fx-background-color: #e6e6e6;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="64.0">
+      <JFXToolbar layoutX="-4.0" prefHeight="800.0" prefWidth="230.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="64.0">
          <top>
             <JFXButton focusTraversable="false" prefHeight="35.0" prefWidth="230.0" text="Nouvelle partie" BorderPane.alignment="CENTER">
                <font>
@@ -32,19 +27,10 @@
          </top>
          <padding>
             <Insets top="32.0" />
-         </padding></JFXToolbar>
-      <JFXDialogLayout layoutX="432.0" layoutY="187.0" prefHeight="120.0" prefWidth="600.0" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="200.0">
-         <children>
-            <Label fx:id="questionLabel" alignment="TOP_LEFT" text="lorem ipsum banana split zeogijzegoi ezgoij zoeigjzeig if (loop) zeogijzeg oui oui" wrapText="true">
-               <font>
-                  <Font size="26.0" />
-               </font>
-               <padding>
-                  <Insets left="20.0" right="20.0" />
-               </padding>
-            </Label>
-         </children>
-      </JFXDialogLayout>
+         </padding>
+         <effect>
+            <DropShadow blurType="GAUSSIAN" />
+         </effect></JFXToolbar>
       <JFXToolbar layoutX="369.0" layoutY="14.0" prefHeight="64.0" style="-fx-background-color: #1976d2;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
             <Label text="Qui veut gagner un pignouf ?" textFill="#e6e6e6" BorderPane.alignment="CENTER">
@@ -57,43 +43,137 @@
             </Label>
          </left>
       </JFXToolbar>
-      <GridPane hgap="30.0" layoutX="541.0" layoutY="370.0" prefHeight="320.0" vgap="30.0" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="150.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <JFXToolbar fx:id="scoreBar" layoutX="486.0" layoutY="82.0" prefHeight="32.0" style="-fx-background-color: #004ba0;" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
+         <left>
+            <Text fx:id="scoreText" fill="#e6e6e6" strokeType="OUTSIDE" strokeWidth="0.0" text="Score" BorderPane.alignment="CENTER" />
+         </left>
+         <padding>
+            <Insets left="16.0" />
+         </padding></JFXToolbar>
+      <Pane fx:id="gamePanel" layoutX="365.0" layoutY="164.0" visible="false">
          <children>
-            <JFXButton fx:id="answer1" buttonType="RAISED" focusTraversable="false" onAction="#handleAnswerButton" prefHeight="160.0" prefWidth="500.0" style="-fx-background-color: #f6f6f6;" text="Réponse A" textAlignment="CENTER" wrapText="true">
+            <JFXDialogLayout layoutX="15.0" layoutY="36.0" prefHeight="120.0" prefWidth="737.0">
+               <children>
+                  <Label fx:id="questionLabel" alignment="TOP_LEFT" prefHeight="62.0" prefWidth="732.0" text="lorem ipsum banana split zeogijz egoi ezgoij zoeig jzeig if (loop) zeogijzeg oui oui" wrapText="true">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </JFXDialogLayout>
+            <GridPane hgap="30.0" layoutX="15.0" layoutY="206.0" prefHeight="320.0" prefWidth="737.0" vgap="30.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <JFXButton fx:id="answer1" buttonType="RAISED" focusTraversable="false" onAction="#handleAnswerButton" prefHeight="160.0" prefWidth="500.0" style="-fx-background-color: #f6f6f6;" text="Réponse A" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="answer2" buttonType="RAISED" focusTraversable="false" onAction="#handleAnswerButton" prefHeight="160.0" prefWidth="500.0" style="-fx-background-color: #f6f6f6;" text="Réponse B" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="answer3" buttonType="RAISED" focusTraversable="false" onAction="#handleAnswerButton" prefHeight="160.0" prefWidth="500.0" style="-fx-background-color: #f6f6f6;" text="Réponse C" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="answer4" buttonType="RAISED" focusTraversable="false" onAction="#handleAnswerButton" prefHeight="160.0" prefWidth="500.0" style="-fx-background-color: #f6f6f6;" text="Réponse D" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </JFXButton>
+               </children>
+            </GridPane>
+            <Label fx:id="questionNumberLabel" layoutX="15.0" text="Question number">
                <font>
-                  <Font size="20.0" />
-               </font></JFXButton>
-            <JFXButton fx:id="answer2" buttonType="RAISED" focusTraversable="false" onAction="#handleAnswerButton" prefHeight="160.0" prefWidth="500.0" style="-fx-background-color: #f6f6f6;" text="Réponse B" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1">
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="fieldLabel" layoutX="682.0" text="[Matière]">
                <font>
-                  <Font size="20.0" />
-               </font></JFXButton>
-            <JFXButton fx:id="answer3" buttonType="RAISED" focusTraversable="false" onAction="#handleAnswerButton" prefHeight="160.0" prefWidth="500.0" style="-fx-background-color: #f6f6f6;" text="Réponse C" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="1">
-               <font>
-                  <Font size="20.0" />
-               </font></JFXButton>
-            <JFXButton fx:id="answer4" buttonType="RAISED" focusTraversable="false" onAction="#handleAnswerButton" prefHeight="160.0" prefWidth="500.0" style="-fx-background-color: #f6f6f6;" text="Réponse D" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <font>
-                  <Font size="20.0" />
-               </font></JFXButton>
+                  <Font size="18.0" />
+               </font>
+            </Label>
          </children>
-      </GridPane>
-      <Label fx:id="questionNumberLabel" layoutX="380.0" layoutY="164.0" text="Question number" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="700.0" AnchorPane.topAnchor="164.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="fieldLabel" layoutX="1047.0" layoutY="170.0" text="[Matière]" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="164.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
+      </Pane>
+      <Pane fx:id="menuPanel" layoutX="300.0" layoutY="140.0" style="-fx-background-color: #ffffff;" visible="false" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="150.0">
+         <children>
+            <Label alignment="CENTER" layoutX="209.0" layoutY="52.0" prefHeight="32.0" prefWidth="493.0" text="Bienvenue dans" wrapText="true">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="1.0" layoutY="88.0" prefHeight="56.0" prefWidth="910.0" text="Qui veut gagner un pignouf" wrapText="true">
+               <font>
+                  <Font size="46.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="newGameButton" buttonType="RAISED" focusTraversable="false" layoutX="305.0" layoutY="253.0" onAction="#handleNewGameButton" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: #1976d2;" text="Nouvelle Partie" textFill="#e6e6e6">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="exitButton" buttonType="RAISED" focusTraversable="false" layoutX="305.0" layoutY="360.0" onAction="#handleExitButton" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: #1976d2;" text="Quitter" textFill="#e6e6e6">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </JFXButton>
+         </children>
+         <effect>
+            <DropShadow blurType="GAUSSIAN" />
+         </effect>
+      </Pane>
+      <Pane fx:id="gameOverPanel" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" visible="false" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="150.0">
+         <children>
+            <Label alignment="CENTER" layoutX="202.0" layoutY="48.0" prefHeight="32.0" prefWidth="493.0" text="Partie terminée" wrapText="true">
+               <font>
+                  <Font size="42.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="209.0" layoutY="150.0" prefHeight="32.0" prefWidth="493.0" text="Votre score est de" wrapText="true">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Label>
+            <Label fx:id="gameOverScoreLabel" alignment="CENTER" layoutX="209.0" layoutY="193.0" prefHeight="32.0" prefWidth="493.0" text="5/10" wrapText="true">
+               <font>
+                  <Font size="100.0" />
+               </font>
+            </Label>
+            <Label fx:id="gameOverCommentLabel" alignment="CENTER" layoutX="1.0" layoutY="350.0" prefHeight="80.0" prefWidth="910.0" text="Petit commentaire pour dire à quel point l'utilisateur est nul" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font size="30.0" />
+               </font>
+               <padding>
+                  <Insets left="100.0" right="100.0" />
+               </padding>
+            </Label>
+            <JFXButton fx:id="gameOverReplay" focusTraversable="false" layoutX="170.0" layoutY="470.0" onAction="#handleNewGameButton" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #1976d2;" text="Rejouer" textFill="#e6e6e6">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="gameOverExit" focusTraversable="false" layoutX="550.0" layoutY="470.0" onAction="#handleExitButton" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #1976d2;" text="Quitter" textFill="#e6e6e6">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </JFXButton>
+         </children>
+         <effect>
+            <DropShadow height="15.0" radius="7.0" width="15.0" />
+         </effect>
+      </Pane>
    </children>
 </AnchorPane>

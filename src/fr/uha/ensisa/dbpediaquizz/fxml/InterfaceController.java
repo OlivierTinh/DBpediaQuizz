@@ -1,6 +1,7 @@
 package fr.uha.ensisa.dbpediaquizz.fxml;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXToolbar;
 import fr.uha.ensisa.dbpediaquizz.questions.Question;
 import fr.uha.ensisa.dbpediaquizz.questions.QuestionFactory;
 import fr.uha.ensisa.dbpediaquizz.util.Constantes;
@@ -8,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 
@@ -21,6 +23,27 @@ public class InterfaceController implements Initializable {
     private Question question;
     private int score = 0;
     private int questionNumber = 0;
+
+
+    /* --- Menu Panel --- */
+
+    @FXML
+    private Pane menuPanel;
+
+    @FXML
+    private JFXButton newGameButton;
+
+    @FXML
+    private JFXButton exitButton;
+
+
+    /* --- Game Panel --- */
+
+    @FXML
+    private Pane gamePanel;
+
+    @FXML
+    private JFXToolbar scoreBar;
 
     @FXML
     private Text scoreText;
@@ -46,6 +69,40 @@ public class InterfaceController implements Initializable {
     @FXML
     private JFXButton answer4;
 
+
+    /* --- Final Score Panel --- */
+
+    @FXML
+    private Pane gameOverPanel;
+
+    @FXML
+    private Label gameOverScoreLabel;
+
+    @FXML
+    private Label gameOverCommentLabel;
+
+    @FXML
+    private JFXButton gameOverReplay;
+
+    @FXML
+    private JFXButton gameOverExit;
+
+    /* --- FXML Functions --- */
+
+    @FXML
+    void handleNewGameButton() {
+        gamePanel.setVisible(true);
+        scoreBar.setVisible(true);
+        menuPanel.setVisible(false);
+        gameOverPanel.setVisible(false);
+        startGame();
+    }
+
+    @FXML
+    void handleExitButton() {
+        System.exit(0);
+    }
+
     @FXML
     void handleAnswerButton(ActionEvent event) {
         this.event = event;
@@ -56,6 +113,17 @@ public class InterfaceController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        menuPanel.setVisible(true);
+        gamePanel.setVisible(false);
+        gameOverPanel.setVisible(false);
+        scoreBar.setVisible(false);
+    }
+
+    /**
+     * Lance la partie en réinitialisant les données et en générant une nouvelle question.
+     */
+    private void startGame() {
+        resetData();
         generateNewQuestion();
         setScoreText(score);
         setQuestionNumberLabel(questionNumber);
@@ -66,7 +134,8 @@ public class InterfaceController implements Initializable {
      */
     private void handleAnswer() {
         String answer = parseAnswer();
-        if (question.isCorrect(answer)) score++;
+        if (question.isCorrect(answer))
+            setScoreText(++score);
     }
 
     /**
@@ -75,9 +144,16 @@ public class InterfaceController implements Initializable {
      */
     private void handleQuestionNumber() {
         if (questionNumber == Constantes.NB_QUESTIONS)
-            System.out.println("TODO: AFFICHER LE SCORE ICI LOL MDR");
+            gameOver();
         else
             setQuestionNumberLabel(++questionNumber);
+    }
+
+    private void gameOver() {
+        gameOverPanel.setVisible(true);
+        gamePanel.setVisible(false);
+        displayGameOverScoreLabel();
+        displayGameOverCommentLabel();
     }
 
     /**
@@ -88,7 +164,10 @@ public class InterfaceController implements Initializable {
         question.display(this);
     }
 
-    private void reset() {
+    /**
+     * Met à zéro les données liées au jeu (score et nb de questions posées)
+     */
+    private void resetData() {
         score = 0;
         questionNumber = 0;
     }
@@ -102,10 +181,6 @@ public class InterfaceController implements Initializable {
      */
     private String parseAnswer() {
         return event.getSource().toString().replaceAll(".*]'(.*)'", "$1");
-    }
-
-    private void setQuestion(Question question) {
-        this.question = question;
     }
 
     /**
@@ -141,6 +216,7 @@ public class InterfaceController implements Initializable {
     /**
      * Attribue une couleur au clic en fonction du texte qui est contenu dans le bouton.
      * Si le texte correspond à la bonne réponse sa couleur au clic sera verte, sinon rouge.
+     * TODO: C'est super facile de tricher avec ça... A corriger
      *
      * @param answerButton le bouton dont on souhaite changer la couleur
      * @param answer la réponse associée au bouton
@@ -156,6 +232,10 @@ public class InterfaceController implements Initializable {
         this.fieldLabel.setText(matiere);
     }
 
+    private void setQuestion(Question question) {
+        this.question = question;
+    }
+
     public void setQuestionLabel(String question) {
         this.questionLabel.setText(question);
     }
@@ -166,6 +246,28 @@ public class InterfaceController implements Initializable {
 
     private void setScoreText(int score) {
         this.scoreText.setText("Score : " + score);
+    }
+
+    private void displayGameOverScoreLabel() {
+        this.gameOverScoreLabel.setText(score + "/10");
+    }
+
+    /**
+     * Affiche un commentaire en fonction du score du joueur à la fin d'une partie.
+     */
+    private void displayGameOverCommentLabel() {
+        String comment;
+
+        if (score < 3)
+            comment = "La culture G et vous ne faîtes pas deux, n'est-ce pas ?";
+        else if (score < 6)
+            comment = "Pas mal, mais peut mieux faire.";
+        else if (score < 9)
+            comment = "Un score honorable ! Bravo :)";
+        else
+            comment = "Vous avez triché, n'est-ce pas ?";
+
+        this.gameOverCommentLabel.setText(comment);
     }
 
 }

@@ -23,9 +23,8 @@ public class DBpediaQuizz extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/Interface.fxml"));
         Parent root = fxmlLoader.load();
         fxmlLoader.getController();
-        Scene scene = new Scene(root);
 
-        primaryStage.setTitle("Qui veut gagner un pignouf");
+        Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
