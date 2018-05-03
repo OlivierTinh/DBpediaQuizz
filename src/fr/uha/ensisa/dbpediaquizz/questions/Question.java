@@ -1,5 +1,6 @@
 package fr.uha.ensisa.dbpediaquizz.questions;
 
+import fr.uha.ensisa.dbpediaquizz.fxml.InterfaceController;
 import fr.uha.ensisa.dbpediaquizz.util.Constantes;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -15,9 +16,38 @@ public abstract class Question {
         this.mauvaisesReponses = new String[3];
     }
 
+    public void display(InterfaceController controller) {
+        // setup
+        String[] reponses = new String[4];
+        Arrays.fill(reponses, null);
+        int bonneReponseIndex = (int)(Math.random() * 4.0D);
+        reponses[bonneReponseIndex] = this.bonneReponse;
+        int mauvaisesReponsesPlacees = 0;
+
+        int choix;
+        while(mauvaisesReponsesPlacees < 3) {
+            choix = (int)(Math.random() * 4.0D);
+            if (reponses[choix] == null) {
+                reponses[choix] = this.mauvaisesReponses[mauvaisesReponsesPlacees];
+                ++mauvaisesReponsesPlacees;
+            }
+        }
+
+        controller.setMatiere(Constantes.CATEGORIES[this.categorie]);
+        controller.setQuestionLabel(this.enonce);
+
+        for(choix = 0; choix < 4; ++choix) {
+            controller.setAnswer(choix + 1, reponses[choix]);
+        }
+    }
+
+    public boolean isCorrect(String answer) {
+        return answer.equals(bonneReponse);
+    }
+
     public int ask(Scanner entry) {
         String[] reponses = new String[4];
-        Arrays.fill(reponses, (Object)null);
+        Arrays.fill(reponses, null);
         int bonneReponseIndex = (int)(Math.random() * 4.0D);
         reponses[bonneReponseIndex] = this.bonneReponse;
         int mauvaisesReponsesPlacees = 0;
@@ -71,4 +101,5 @@ public abstract class Question {
 
         return absent;
     }
+
 }
