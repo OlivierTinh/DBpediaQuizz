@@ -11,7 +11,6 @@ import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 public class InterfaceController implements Initializable {
 
@@ -26,10 +25,10 @@ public class InterfaceController implements Initializable {
     private Label questionNumberLabel;
 
     @FXML
-    private Label questionLabel;
+    private Label fieldLabel;
 
     @FXML
-    private JFXButton fieldText;
+    private Label questionLabel;
 
     @FXML
     private JFXButton answer1;
@@ -47,8 +46,7 @@ public class InterfaceController implements Initializable {
     void handleAnswerButton(ActionEvent event) {
         // checking the answer
         String answer = event.getSource().toString().replaceAll(".*]'(.*)'", "$1");
-        System.out.println("\n+ " + event);
-        System.out.println("+ " + answer);
+        System.out.println("\n+ " + answer);
         if (question.isCorrect(answer))
             handleCorrectAnswer();
         else
@@ -82,6 +80,11 @@ public class InterfaceController implements Initializable {
 
     }
 
+    private void reset() {
+        score = 0;
+        questionNumber = 0;
+    }
+
     private void setQuestion(Question question) {
         this.question = question;
     }
@@ -106,7 +109,7 @@ public class InterfaceController implements Initializable {
     }
 
     public void setMatiere(String matiere) {
-        this.fieldText.setText(matiere);
+        this.fieldLabel.setText(matiere);
     }
 
     public void setQuestionLabel(String question) {

@@ -2,7 +2,6 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDialogLayout?>
-<?import com.jfoenix.controls.JFXHamburger?>
 <?import com.jfoenix.controls.JFXToolbar?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -23,25 +22,39 @@
          <padding>
             <Insets left="16.0" />
          </padding></JFXToolbar>
-      <JFXToolbar layoutX="-4.0" prefHeight="800.0" prefWidth="230.0" style="-fx-background-color: #e6e6e6;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="64.0" />
-      <JFXDialogLayout layoutX="432.0" layoutY="187.0" prefHeight="120.0" prefWidth="600.0" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="180.0">
+      <JFXToolbar layoutX="-4.0" prefHeight="800.0" prefWidth="230.0" style="-fx-background-color: #e6e6e6;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="64.0">
+         <top>
+            <JFXButton focusTraversable="false" text="Nouvelle partie" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+         </top>
+         <padding>
+            <Insets top="32.0" />
+         </padding></JFXToolbar>
+      <JFXDialogLayout layoutX="432.0" layoutY="187.0" prefHeight="120.0" prefWidth="600.0" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="200.0">
          <children>
             <Label fx:id="questionLabel" alignment="TOP_LEFT" text="lorem ipsum banana split zeogijzegoi ezgoij zoeigjzeig if (loop) zeogijzeg oui oui" wrapText="true">
                <font>
                   <Font size="26.0" />
                </font>
                <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" />
+                  <Insets left="20.0" right="20.0" />
                </padding>
             </Label>
          </children>
       </JFXDialogLayout>
       <JFXToolbar layoutX="369.0" layoutY="14.0" prefHeight="64.0" style="-fx-background-color: #1976d2;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
-            <JFXHamburger BorderPane.alignment="CENTER">
+            <Label text="Qui veut gagner un pignouf ?" textFill="#e6e6e6" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font>
                <padding>
                   <Insets left="24.0" />
-               </padding></JFXHamburger>
+               </padding>
+            </Label>
          </left>
       </JFXToolbar>
       <GridPane hgap="30.0" layoutX="541.0" layoutY="370.0" prefHeight="320.0" vgap="30.0" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="150.0">
@@ -72,8 +85,12 @@
                </font></JFXButton>
          </children>
       </GridPane>
-      <JFXButton fx:id="fieldText" buttonType="RAISED" focusTraversable="false" layoutX="230.0" layoutY="96.0" style="-fx-background-color: #e23e31; -fx-background-radius: 0;" text="[Matière]" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="230.0" AnchorPane.rightAnchor="900.0" />
       <Label fx:id="questionNumberLabel" layoutX="380.0" layoutY="164.0" text="Question number" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="700.0" AnchorPane.topAnchor="164.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="fieldLabel" layoutX="1047.0" layoutY="170.0" text="[Matière]" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="164.0">
          <font>
             <Font size="18.0" />
          </font>

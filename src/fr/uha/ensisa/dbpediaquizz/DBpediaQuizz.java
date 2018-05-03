@@ -1,6 +1,5 @@
 package fr.uha.ensisa.dbpediaquizz;
 
-import fr.uha.ensisa.dbpediaquizz.fxml.InterfaceController;
 import fr.uha.ensisa.dbpediaquizz.questions.Question;
 import fr.uha.ensisa.dbpediaquizz.questions.QuestionFactory;
 import fr.uha.ensisa.dbpediaquizz.util.Constantes;
