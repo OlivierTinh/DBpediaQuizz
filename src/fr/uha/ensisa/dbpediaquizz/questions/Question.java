@@ -42,13 +42,8 @@ public abstract class Question {
     }
 
     public boolean isCorrect(String answer) {
-        if (answer.equals(bonneReponse)) {
-            System.out.println("SEHR GUT");
-            return true;
-        } else {
-            System.out.println("SEHR SHIT");
-            return false;
-        }
+        System.out.println("- " + bonneReponse);
+        return answer.equals(bonneReponse);
     }
 
     public int ask(Scanner entry) {

@@ -23,17 +23,12 @@ public class DBpediaQuizz extends Application {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/Interface.fxml"));
         Parent root = fxmlLoader.load();
-        InterfaceController controller = fxmlLoader.getController();
+        fxmlLoader.getController();
         Scene scene = new Scene(root);
 
         primaryStage.setTitle("Qui veut gagner un pignouf");
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        controller.setQuestion(QuestionFactory.createQuestion());
-        controller.getQuestion().display(controller);
-        controller.setScoreText(score);
-        controller.setQuestionNumberLabel(currentQuestion);
     }
 
     // Mode console

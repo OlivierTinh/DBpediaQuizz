@@ -2,6 +2,7 @@ package fr.uha.ensisa.dbpediaquizz.fxml;
 
 import com.jfoenix.controls.JFXButton;
 import fr.uha.ensisa.dbpediaquizz.questions.Question;
+import fr.uha.ensisa.dbpediaquizz.questions.QuestionFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,6 +11,7 @@ import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class InterfaceController implements Initializable {
 
@@ -43,17 +45,34 @@ public class InterfaceController implements Initializable {
 
     @FXML
     void handleAnswerButton(ActionEvent event) {
-        String answer = event.getSource().toString().replaceAll(".*'(.*?)'", "$1");
-        setQuestionNumberLabel(++questionNumber);
-
+        // checking the answer
+        String answer = event.getSource().toString().replaceAll(".*]'(.*)'", "$1");
+        System.out.println("\n+ " + event);
+        System.out.println("+ " + answer);
         if (question.isCorrect(answer))
             handleCorrectAnswer();
         else
             handleFalseAnswer();
+
+        // checking the nb of questions asked
+        if (questionNumber == 10)
+            System.out.println("TODO: AFFICHER LE SCORE ICI LOL MDR");
+        else
+            setQuestionNumberLabel(++questionNumber);
+
+        // generating a new question
+        // TODO: mettre une légère pause
+        setQuestion(QuestionFactory.createQuestion());
+        question.display(this);
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {}
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        setQuestion(QuestionFactory.createQuestion());
+        question.display(this);
+        setScoreText(score);
+        setQuestionNumberLabel(questionNumber);
+    }
 
     private void handleCorrectAnswer() {
         setScoreText(++score);
@@ -63,11 +82,7 @@ public class InterfaceController implements Initializable {
 
     }
 
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
+    private void setQuestion(Question question) {
         this.question = question;
     }
 
@@ -98,11 +113,11 @@ public class InterfaceController implements Initializable {
         this.questionLabel.setText(question);
     }
 
-    public void setQuestionNumberLabel(int nb) {
+    private void setQuestionNumberLabel(int nb) {
         this.questionNumberLabel.setText("Question " + nb + "/10");
     }
 
-    public void setScoreText(int score) {
+    private void setScoreText(int score) {
         this.scoreText.setText("Score : " + score);
     }
 
