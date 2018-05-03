@@ -6,10 +6,10 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public abstract class Question {
-    protected int categorie;
-    protected String enonce;
-    protected String bonneReponse;
-    protected String[] mauvaisesReponses;
+    private int categorie;
+    String enonce;
+    String bonneReponse;
+    String[] mauvaisesReponses;
 
     public Question(int categorie) {
         this.categorie = categorie;
@@ -87,7 +87,7 @@ public abstract class Question {
         return score;
     }
 
-    protected boolean reponseAbsente(String nouvelleReponse) {
+    boolean reponseAbsente(String nouvelleReponse) {
         boolean absent = true;
         if (this.bonneReponse.equalsIgnoreCase(nouvelleReponse)) {
             absent = false;

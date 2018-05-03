@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXToolbar;
 import fr.uha.ensisa.dbpediaquizz.questions.Question;
 import fr.uha.ensisa.dbpediaquizz.questions.QuestionFactory;
 import fr.uha.ensisa.dbpediaquizz.util.Constantes;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,10 +16,14 @@ import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class InterfaceController implements Initializable {
 
     private ActionEvent event;
+    private Timer timer = new Timer();
+    private final int[] timeLeft = {Constantes.TEMPS_RESTANT};
 
     private Question question;
     private int score = 0;
@@ -47,6 +52,9 @@ public class InterfaceController implements Initializable {
 
     @FXML
     private Text scoreText;
+
+    @FXML
+    private Text timeLeftText;
 
     @FXML
     private Label questionNumberLabel;
@@ -109,6 +117,7 @@ public class InterfaceController implements Initializable {
         handleAnswer();
         handleQuestionNumber();
         generateNewQuestion();
+        timeLeft[0] = Constantes.TEMPS_RESTANT;
     }
 
     @Override
@@ -126,7 +135,41 @@ public class InterfaceController implements Initializable {
         resetData();
         generateNewQuestion();
         setScoreText(score);
-        setQuestionNumberLabel(questionNumber);
+        setQuestionNumberLabel(++questionNumber);
+        startTimer();
+    }
+
+    /**
+     * Démarre un timer qui se décrémente de seconde en seconde.
+     * Lorsque le temps restant est nul, on passe à la prochaine question.
+     */
+    private void startTimer() {
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                displayTimeLeftText();
+                timeLeft[0]--;
+                if(timeLeft[0] < 0) {
+                    Platform.runLater(() -> {
+                        handleQuestionNumber();
+                        generateNewQuestion();
+                    });
+                    timeLeft[0] = Constantes.TEMPS_RESTANT;
+                }
+            }
+        }, 0, Constantes.TEMPS_RESTANT * 100);
+    }
+
+    /**
+     * Gère la fin de la partie. Affiche le panel montrant le score ainsi qu'un commentaire lié à celui-ci.
+     */
+    private void gameOver() {
+        gameOverPanel.setVisible(true);
+        gamePanel.setVisible(false);
+        scoreBar.setVisible(false);
+        displayGameOverScoreLabel();
+        displayGameOverCommentLabel();
+        timer.cancel();
     }
 
     /**
@@ -147,13 +190,6 @@ public class InterfaceController implements Initializable {
             gameOver();
         else
             setQuestionNumberLabel(++questionNumber);
-    }
-
-    private void gameOver() {
-        gameOverPanel.setVisible(true);
-        gamePanel.setVisible(false);
-        displayGameOverScoreLabel();
-        displayGameOverCommentLabel();
     }
 
     /**
@@ -248,6 +284,10 @@ public class InterfaceController implements Initializable {
         this.scoreText.setText("Score : " + score);
     }
 
+    private void displayTimeLeftText() {
+        this.timeLeftText.setText("Temps restant: " + timeLeft[0] + "s");
+    }
+
     private void displayGameOverScoreLabel() {
         this.gameOverScoreLabel.setText(score + "/10");
     }
@@ -259,7 +299,7 @@ public class InterfaceController implements Initializable {
         String comment;
 
         if (score < 3)
-            comment = "La culture G et vous ne faîtes pas deux, n'est-ce pas ?";
+            comment = "La culture G et vous ça ne fait pas deux, n'est-ce pas ?";
         else if (score < 6)
             comment = "Pas mal, mais peut mieux faire.";
         else if (score < 9)
