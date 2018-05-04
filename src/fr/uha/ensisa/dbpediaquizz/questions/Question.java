@@ -166,11 +166,21 @@ public abstract class Question {
     }
 
     /**
+     * Charge la bonne et les mauvaises réponses à l'aide de la variable SPARQL.
+     *
+     * @param queryVariable variable SPARQL correspondant au type de réponse attendu
+     */
+    void setReponses(String queryVariable) {
+        setBonneReponse(queryVariable);
+        setMauvaisesReponses(queryVariable);
+    }
+
+    /**
      * Charge la bonne réponse dans la variable associée.
      *
      * @param queryVariable variable SPARQL correspondant au type de réponse attendu
      */
-    void setBonneReponse(String queryVariable) {
+    private void setBonneReponse(String queryVariable) {
         bonneReponse = dataLine.getLiteral(queryVariable).getString();
     }
 
@@ -179,7 +189,7 @@ public abstract class Question {
      *
      * @param queryVariable variable SPARQL correspondant au type de réponse attendu
      */
-    void setMauvaisesReponses(String queryVariable) {
+    private void setMauvaisesReponses(String queryVariable) {
         int i = 0;
         while (i < 3) {
             dataLine = (QuerySolution) datas.get( (int)(Math.random() * (double) datas.size()) );

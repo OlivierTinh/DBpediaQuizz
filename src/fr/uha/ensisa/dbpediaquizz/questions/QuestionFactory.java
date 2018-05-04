@@ -19,6 +19,9 @@ public class QuestionFactory {
 			case 2:
 				question = new QuestionFilm();
 				break;
+			case 3:
+				question = new QuestionComics();
+				break;
 			default:
 				question = new QuestionChampionnatFranceFootball();
 		}

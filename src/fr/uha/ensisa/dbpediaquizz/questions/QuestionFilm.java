@@ -6,9 +6,15 @@ class QuestionFilm extends Question {
 
     QuestionFilm() {
         super(Constantes.CINEMA);
-        setEnonce("En quelle année est sorti ", "?titre");
-        setBonneReponse("?date");
-        setMauvaisesReponses("?date");
+
+        if (Math.random() < 0.5D) {
+            setEnonce("En quelle année est sorti \"", "?titre", "\"");
+            setReponses("?date");
+        } else {
+            setEnonce("Qui est le directeur de \"", "?titre", "\"");
+            setReponses("?directeur");
+        }
+
     }
 
     @Override

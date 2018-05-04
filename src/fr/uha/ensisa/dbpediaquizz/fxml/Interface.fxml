@@ -99,12 +99,12 @@
                   </JFXButton>
                </children>
             </GridPane>
-            <Label fx:id="questionNumberLabel" layoutX="15.0" text="Question number">
+            <Label fx:id="questionNumberLabel" layoutX="15.0" text="Numéro question">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="fieldLabel" layoutX="682.0" text="Matière">
+            <Label fx:id="fieldLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="581.0" prefHeight="21.0" prefWidth="175.0" text="Domaine">
                <font>
                   <Font size="18.0" />
                </font>

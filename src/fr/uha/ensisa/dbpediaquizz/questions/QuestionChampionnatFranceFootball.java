@@ -8,9 +8,9 @@ class QuestionChampionnatFranceFootball extends Question {
 
     QuestionChampionnatFranceFootball() {
         super(Constantes.SPORT);
+
         setEnonce("Quelle équipe a gagné le ", "?nomTournoi");
-        setBonneReponse("?nomVainqueur");
-        setMauvaisesReponses("?nomVainqueur");
+        setReponses("?nomVainqueur");
     }
 
     @Override

@@ -8,9 +8,9 @@ class QuestionRoiEtPredecesseur extends Question {
 
     QuestionRoiEtPredecesseur() {
         super(Constantes.HISTOIRE);
+
         setEnonce("Quel est le prédecesseur du roi " , "?nomRoi");
-        setBonneReponse("?nomPredecesseur");
-        setMauvaisesReponses("?nomPredecesseur");
+        setReponses("?nomPredecesseur");
     }
 
     @Override

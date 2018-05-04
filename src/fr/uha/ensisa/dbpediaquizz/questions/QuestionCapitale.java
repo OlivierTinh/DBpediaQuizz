@@ -6,14 +6,13 @@ class QuestionCapitale extends Question {
 
     QuestionCapitale() {
         super(Constantes.GEOGRAPHIE);
+
         if (Math.random() < 0.5D) {
             setEnonce("Quelle est la capitale de ", "?nomPays");
-            setBonneReponse("?nomVille");
-            setMauvaisesReponses("?nomVille");
+            setReponses("?nomVille");
         } else {
             setEnonce("De quoi ", "?nomVille", " est la capitale");
-            setBonneReponse("?nomPays");
-            setMauvaisesReponses("?nomPays");
+            setReponses("?nomPays");
         }
 
     }
