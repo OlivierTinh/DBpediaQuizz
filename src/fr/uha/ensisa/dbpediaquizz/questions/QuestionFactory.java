@@ -25,6 +25,9 @@ public class QuestionFactory {
 			case 4:
 				question = new QuestionJeuVideo();
 				break;
+			case 5:
+				question = new QuestionInformatique();
+				break;
 			default:
 				question = new QuestionChampionnatFranceFootball();
 		}

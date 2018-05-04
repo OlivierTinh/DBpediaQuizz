@@ -202,7 +202,7 @@ public class InterfaceController implements Initializable {
     }
 
     void displayTimeLeftText() {
-        this.timeLeftText.setText("Temps restant : " + game.getTimeLeft() + "s");
+        this.timeLeftText.setText(game.getTimeLeft() + "");
     }
 
     private void displayGameOverScoreLabel() {
@@ -215,15 +215,19 @@ public class InterfaceController implements Initializable {
     private void displayGameOverCommentLabel() {
         String comment;
         int score = game.getScore();
+        gameOverScoreLabel.setTextFill(Paint.valueOf("GREEN"));
 
-        if (score < 4)
+        if (score < 4) {
+            gameOverScoreLabel.setTextFill(Paint.valueOf("RED"));
             comment = "La culture G et vous ça ne fait pas deux, n'est-ce pas ?";
-        else if (score < 6)
+        } else if (score < 6) {
+            gameOverScoreLabel.setTextFill(Paint.valueOf("ORANGE"));
             comment = "Pas mal, mais peut mieux faire.";
-        else if (score < 9)
+        } else if (score < 9) {
             comment = "Un score honorable ! Bravo :)";
-        else
+        } else {
             comment = "Vous avez triché, n'est-ce pas ?";
+        }
 
         this.gameOverCommentLabel.setText(comment);
     }

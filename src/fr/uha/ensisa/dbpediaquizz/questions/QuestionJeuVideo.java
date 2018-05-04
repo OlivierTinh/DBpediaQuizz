@@ -39,4 +39,5 @@ class QuestionJeuVideo extends Question {
                 "  FILTER ( lang(?genre) = 'fr' )\n" +
                 "} LIMIT 500";
     }
+
 }

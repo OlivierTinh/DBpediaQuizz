@@ -12,25 +12,37 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.uha.ensisa.dbpediaquizz.fxml.InterfaceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.uha.ensisa.dbpediaquizz.fxml.InterfaceController">
    <children>
-      <JFXToolbar layoutX="-4.0" prefHeight="800.0" prefWidth="230.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="64.0">
-         <top>
-            <JFXButton focusTraversable="false" prefHeight="35.0" prefWidth="230.0" text="Nouvelle partie" BorderPane.alignment="CENTER">
+      <Pane layoutX="-6.0" layoutY="64.0" prefWidth="230.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="64.0">
+         <effect>
+            <DropShadow height="15.0" radius="7.0" width="15.0" />
+         </effect>
+         <children>
+            <JFXButton focusTraversable="false" layoutY="134.0" prefHeight="26.0" prefWidth="230.0" text="Nouvelle partie">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
-         </top>
-         <padding>
-            <Insets top="32.0" />
-         </padding>
-         <effect>
-            <DropShadow blurType="GAUSSIAN" />
-         </effect></JFXToolbar>
+            <Text layoutY="715.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Web sémantique - ensisa 2018" textAlignment="CENTER" wrappingWidth="229.9999862909317" />
+            <Text layoutY="691.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Olivier TINH - Lucas GAUZIEDE" textAlignment="CENTER" wrappingWidth="229.9999862909317" />
+            <Text layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur 1" textAlignment="CENTER" wrappingWidth="229.9999862909317">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Text>
+            <Text layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Au tour de" textAlignment="CENTER" wrappingWidth="229.9999862909317">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Line endX="230.0" layoutY="100.0" stroke="#bbbbbb" />
+         </children>
+      </Pane>
       <JFXToolbar layoutX="369.0" layoutY="14.0" prefHeight="64.0" style="-fx-background-color: #1976d2;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
             <Label text="Qui veut gagner un pignouf ?" textFill="#e6e6e6" BorderPane.alignment="CENTER">
@@ -49,12 +61,13 @@
          </left>
          <padding>
             <Insets left="16.0" right="16.0" />
-         </padding>
-         <right>
-            <Text fx:id="timeLeftText" fill="#e6e6e6" strokeType="OUTSIDE" strokeWidth="0.0" text="Temps restant" BorderPane.alignment="CENTER" />
-         </right></JFXToolbar>
+         </padding></JFXToolbar>
       <Pane fx:id="gamePanel" layoutX="365.0" layoutY="164.0">
          <children>
+            <Text fx:id="timeLeftText" layoutX="375.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="8" textAlignment="CENTER">
+               <font>
+                  <Font size="28.0" />
+               </font></Text>
             <JFXDialogLayout layoutX="15.0" layoutY="36.0" prefHeight="120.0" prefWidth="737.0">
                <children>
                   <Label fx:id="questionLabel" prefHeight="62.0" prefWidth="732.0" text="lorem ipsum banana split zeogijz egoi ezgoij zoeig jzeig if (loop) zeogijzeg oui oui" textAlignment="CENTER" wrapText="true">

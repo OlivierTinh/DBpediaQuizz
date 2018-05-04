@@ -11,7 +11,7 @@ class QuestionCapitale extends Question {
             setEnonce("Quelle est la capitale de ", "?nomPays");
             setReponse("?nomVille");
         } else {
-            setEnonce("De quoi ", "?nomVille", " est la capitale");
+            setEnonce("De quoi ", "?nomVille", " est la capitale ");
             setReponse("?nomPays");
         }
 
