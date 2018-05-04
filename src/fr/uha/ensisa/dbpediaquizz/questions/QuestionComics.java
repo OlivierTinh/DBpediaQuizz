@@ -8,19 +8,19 @@ class QuestionComics extends Question {
         super(Constantes.BANDE_DESSINEES);
 
         if (Math.random() < 0.33D) {
-            setEnonce("Qui est l'auteur de la BD \"", "?titre", "\"");
-            setReponses("?auteur");
+            setEnonce("Qui est l'auteur de la BD \"", "?titre", "\" ?");
+            setReponse("?auteur");
         } else if (Math.random() < 0.66D) {
-            setEnonce("Qui retrouve-t-on dans la série \"", "?titre", "\"");
-            setReponses("?persoPrincipal");
+            setEnonce("Qui retrouve-t-on dans la série \"", "?titre", "\" ?");
+            setReponse("?persoPrincipal");
         } else {
             setEnonce("A quelle bande-dessinée appartient ", "?persoPrincipal");
-            setReponses("?serie");
+            setReponse("?serie");
         }
     }
 
     @Override
-    void setRequest() {
+    void setQuery() {
         query = "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
                 "PREFIX prop-fr: <http://fr.dbpedia.org/property/>\n" +

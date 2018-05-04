@@ -8,17 +8,17 @@ class QuestionFilm extends Question {
         super(Constantes.CINEMA);
 
         if (Math.random() < 0.5D) {
-            setEnonce("En quelle année est sorti \"", "?titre", "\"");
-            setReponses("?date");
+            setEnonce("En quelle année est sorti \"", "?titre", "\" ?");
+            setReponse("?date");
         } else {
-            setEnonce("Qui est le directeur de \"", "?titre", "\"");
-            setReponses("?directeur");
+            setEnonce("Qui est le directeur de \"", "?titre", "\" ?");
+            setReponse("?directeur");
         }
 
     }
 
     @Override
-    void setRequest() {
+    void setQuery() {
         query = "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
                 "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
                 "PREFIX prop-fr: <http://fr.dbpedia.org/property/>\n" +

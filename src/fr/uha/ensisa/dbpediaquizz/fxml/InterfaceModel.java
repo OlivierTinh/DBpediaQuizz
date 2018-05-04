@@ -112,7 +112,7 @@ class InterfaceModel {
      */
     private void generateNewQuestion() {
         setQuestion(QuestionFactory.createQuestion());
-        question.display(controller);
+        question.displayQuestion(controller);
     }
 
     int getScore() {

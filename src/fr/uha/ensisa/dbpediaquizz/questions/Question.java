@@ -11,11 +11,18 @@ import java.util.Scanner;
 
 public abstract class Question {
 
+    // Question
     private int categorie;
     private String enonce;
     private String bonneReponse;
     private String[] mauvaisesReponses;
 
+    // Temp
+    private String[] reponses;
+    private int bonneReponseIndex;
+    private int choix;
+
+    // Queries
     String query;
     private List datas;
     private QuerySolution dataLine;
@@ -26,55 +33,40 @@ public abstract class Question {
         handleRequest();
     }
 
-    public void display(InterfaceController controller) {
-        // setup
-        String[] reponses = new String[4];
-        Arrays.fill(reponses, null);
-        int bonneReponseIndex = (int)(Math.random() * 4.0D);
-        reponses[bonneReponseIndex] = this.bonneReponse;
-        int mauvaisesReponsesPlacees = 0;
-
-        int choix;
-        while(mauvaisesReponsesPlacees < 3) {
-            choix = (int)(Math.random() * 4.0D);
-            if (reponses[choix] == null) {
-                reponses[choix] = this.mauvaisesReponses[mauvaisesReponsesPlacees];
-                ++mauvaisesReponsesPlacees;
-            }
-        }
+    /**
+     * Utilisé en MODE_GRAPHIQUE.
+     * Affiche la catégorie, la question et les différentes propositions possibles
+     * pour la question courante lors d'une partie.
+     *
+     * @param controller le Controller responsable de la partie dynamique de l'interface graphique
+     */
+    public void displayQuestion(InterfaceController controller) {
+        setAnswersIndex();
 
         controller.setField(Constantes.CATEGORIES[this.categorie]);
         controller.setQuestionLabel(this.enonce);
 
-        for(choix = 0; choix < 4; ++choix) {
+        for (choix = 0; choix < Constantes.NB_REPONSES; ++choix)
             controller.setAnswer(choix + 1, reponses[choix]);
-        }
     }
 
-    public boolean isCorrect(String answer) {
-        return answer.equals(bonneReponse);
-    }
-
+    /**
+     * Utilisé en MODE_CONSOLE.
+     * Affiche la catégorie, la question et les différentes propositions possibles
+     * pour la question courante lors d'une partie.
+     * Demande par la suite à l'utilisateur d'entrer un nombre correspondant à l'index d'une
+     * des propositions.
+     *
+     * @param entry le Scanner permettant de demander un input à l'utilisateur
+     * @return 1 si la réponse est correcte, 0 si elle est fausse
+     */
     public int ask(Scanner entry) {
-        String[] reponses = new String[4];
-        Arrays.fill(reponses, null);
-        int bonneReponseIndex = (int)(Math.random() * 4.0D);
-        reponses[bonneReponseIndex] = this.bonneReponse;
-        int mauvaisesReponsesPlacees = 0;
-
-        int choix;
-        while(mauvaisesReponsesPlacees < 3) {
-            choix = (int)(Math.random() * 4.0D);
-            if (reponses[choix] == null) {
-                reponses[choix] = this.mauvaisesReponses[mauvaisesReponsesPlacees];
-                ++mauvaisesReponsesPlacees;
-            }
-        }
+        setAnswersIndex();
 
         System.out.println("Question de " + Constantes.CATEGORIES[this.categorie]);
         System.out.println(this.enonce);
 
-        for(choix = 0; choix < 4; ++choix) {
+        for(choix = 0; choix < Constantes.NB_REPONSES; ++choix) {
             System.out.println(choix + 1 + ") " + reponses[choix]);
         }
 
@@ -97,8 +89,36 @@ public abstract class Question {
         return score;
     }
 
+    /**
+     * Place aléatoirement une réponse dans une des cellules du tableau contenant toutes les
+     * réponses possibles. Cela permet par la suite de pouvoir aisément afficher les réponses
+     * en MODE_CONSOLE ou en MODE_GRAPHIQUE.
+     */
+    private void setAnswersIndex() {
+        reponses = new String[Constantes.NB_REPONSES];
+        Arrays.fill(reponses, null);
+        bonneReponseIndex = (int)(Math.random() * Constantes.NB_REPONSES);
+        reponses[bonneReponseIndex] = this.bonneReponse;
+        int mauvaisesReponsesPlacees = 0;
+
+        while(mauvaisesReponsesPlacees < Constantes.NB_REPONSES - 1) {
+            choix = (int)(Math.random() * Constantes.NB_REPONSES);
+            if (reponses[choix] == null) {
+                reponses[choix] = this.mauvaisesReponses[mauvaisesReponsesPlacees];
+                ++mauvaisesReponsesPlacees;
+            }
+        }
+    }
+
+    /**
+     * Vérifie si la réponse n'existe pas déjà parmi les propositions possibles chargées.
+     *
+     * @param nouvelleReponse la réponse attendue
+     * @return true si la réponse ne correspond pas aux propositions chargées, false autrement
+     */
     private boolean reponseAbsente(String nouvelleReponse) {
         boolean absent = true;
+
         if (this.bonneReponse.equalsIgnoreCase(nouvelleReponse)) {
             absent = false;
         } else {
@@ -112,6 +132,17 @@ public abstract class Question {
         return absent;
     }
 
+    /**
+     * Compare la réponse choisie lors de la partie à la bonne réponse attendue.
+     *
+     * @param answer le texte du bouton cliqué
+     * @return vrai si answer correspond à la bonne réponse, faux autrement
+     */
+    public boolean isCorrect(String answer) {
+        return answer.equals(bonneReponse);
+    }
+
+
 
     /* --- Méthodes pour les questions implémentant la fonction --- */
 
@@ -119,8 +150,8 @@ public abstract class Question {
      * Initialise les variables nécessaires pour l'implémentation des questions.
      */
     private void handleRequest() {
-        setRequest();
-        execRequest();
+        setQuery();
+        execQuery();
         getRandomLine();
     }
 
@@ -128,17 +159,17 @@ public abstract class Question {
      * Charge la requête SPARQL dans une variable.
      * Doit être définie pour chaque catégorie de Question.
      */
-    abstract void setRequest();
+    abstract void setQuery();
 
     /**
      * Exécute la requête SPARQL et enregistre le résultat dans une liste `datas`.
      */
-    private void execRequest() {
+    private void execQuery() {
         datas = DBpediaQuery.execRequete(query);
     }
 
     /**
-     * Prend une ligne au hasard à partir des `datas` obtenues à l'aide de execRequest().
+     * Prend une ligne au hasard à partir des `datas` obtenues à l'aide de execQuery().
      */
     private void getRandomLine() {
         dataLine = (QuerySolution) datas.get( (int)(Math.random() * (double) datas.size()) );
@@ -162,7 +193,7 @@ public abstract class Question {
      * @param sentence2 deuxième partie de la question à poser
      */
     void setEnonce(String sentence, String queryVariable, String sentence2) {
-        enonce = sentence + dataLine.getLiteral(queryVariable).getString() + sentence2 + " ?";
+        enonce = sentence + dataLine.getLiteral(queryVariable).getString() + sentence2;
     }
 
     /**
@@ -170,7 +201,7 @@ public abstract class Question {
      *
      * @param queryVariable variable SPARQL correspondant au type de réponse attendu
      */
-    void setReponses(String queryVariable) {
+    void setReponse(String queryVariable) {
         setBonneReponse(queryVariable);
         setMauvaisesReponses(queryVariable);
     }
@@ -186,12 +217,14 @@ public abstract class Question {
 
     /**
      * Charge les mauvaises réponses dans le tableau associé.
+     * Pour cela, une ligne de la liste `datas` est prise aléatoirement jusqu'à ce que l'on en
+     * ait [Nombre total de réponses - 1].
      *
      * @param queryVariable variable SPARQL correspondant au type de réponse attendu
      */
     private void setMauvaisesReponses(String queryVariable) {
         int i = 0;
-        while (i < 3) {
+        while (i < Constantes.NB_REPONSES - 1) {
             dataLine = (QuerySolution) datas.get( (int)(Math.random() * (double) datas.size()) );
             String randomAnswer = dataLine.getLiteral(queryVariable).getString();
             if (reponseAbsente(randomAnswer)) {
