@@ -1,11 +1,13 @@
 package fr.uha.ensisa.dbpediaquizz.questions;
 
+import fr.uha.ensisa.dbpediaquizz.util.Constantes;
+
 public class QuestionFactory {
 	public QuestionFactory() {
 	}
 
 	public static Question createQuestion() {
-		int questionType = (int)(Math.random() * 3.0D);
+		int questionType = (int)(Math.random() * Constantes.CATEGORIES.length);
 		Object question;
 		switch(questionType) {
 			case 0:
@@ -13,6 +15,9 @@ public class QuestionFactory {
 				break;
 			case 1:
 				question = new QuestionRoiEtPredecesseur();
+				break;
+			case 2:
+				question = new QuestionFilm();
 				break;
 			default:
 				question = new QuestionChampionnatFranceFootball();
