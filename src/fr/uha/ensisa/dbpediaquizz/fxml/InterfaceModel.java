@@ -60,8 +60,7 @@ class InterfaceModel {
     }
 
     /**
-     * Gère la réponse lors du clic sur une des réponses au cours d'une partie.
-     * On récupère la réponse en fonction du bouton cliqué, regarde si la réponse et bonne puis on passe
+     * Récupère la réponse en fonction du bouton cliqué, regarde si la réponse est bonne puis passe
      * à la prochaine question.
      *
      * @param event événement attrapé par le clic de la souris
