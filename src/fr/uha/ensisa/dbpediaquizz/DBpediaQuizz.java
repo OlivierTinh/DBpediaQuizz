@@ -17,7 +17,14 @@ public class DBpediaQuizz extends Application {
     private static int currentQuestion = 0;
     private static int score = 0;
 
-    // Mode graphique
+    /**
+     * Fonction appelée si on est en MODE_GRAPHIQUE.
+     * On charge le fichier Interface.fxml contenant toutes les informations relatives à la fenêtre graphique.
+     * On appelle ensuite le Controller qui gère la partie dynamique de la fenêtre.
+     *
+     * @param primaryStage le stage JavaFX
+     * @throws IOException exception pour load()
+     */
     @Override
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxml/Interface.fxml"));
@@ -29,7 +36,10 @@ public class DBpediaQuizz extends Application {
         primaryStage.show();
     }
 
-    // Mode console
+    /**
+     * Fonction appelée si on est en MODE_CONSOLE.
+     * Lance le jeu de manière textuelle.
+     */
     private static void launchConsole() {
         Scanner entry = new Scanner(System.in);
         System.out.println("******* DBpedia Quizz *******");
@@ -51,6 +61,8 @@ public class DBpediaQuizz extends Application {
     }
 
     public static void main(String[] args) {
+        // 0: Mode Console
+        // 1: Mode Graphique
         int mode = 1;
 
         switch (mode) {

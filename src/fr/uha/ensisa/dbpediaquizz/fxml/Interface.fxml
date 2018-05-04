@@ -48,13 +48,16 @@
             <Text fx:id="scoreText" fill="#e6e6e6" strokeType="OUTSIDE" strokeWidth="0.0" text="Score" BorderPane.alignment="CENTER" />
          </left>
          <padding>
-            <Insets left="16.0" />
-         </padding></JFXToolbar>
-      <Pane fx:id="gamePanel" layoutX="365.0" layoutY="164.0" visible="false">
+            <Insets left="16.0" right="16.0" />
+         </padding>
+         <right>
+            <Text fx:id="timeLeftText" fill="#e6e6e6" strokeType="OUTSIDE" strokeWidth="0.0" text="Temps restant" BorderPane.alignment="CENTER" />
+         </right></JFXToolbar>
+      <Pane fx:id="gamePanel" layoutX="365.0" layoutY="164.0">
          <children>
             <JFXDialogLayout layoutX="15.0" layoutY="36.0" prefHeight="120.0" prefWidth="737.0">
                <children>
-                  <Label fx:id="questionLabel" alignment="TOP_LEFT" prefHeight="62.0" prefWidth="732.0" text="lorem ipsum banana split zeogijz egoi ezgoij zoeig jzeig if (loop) zeogijzeg oui oui" wrapText="true">
+                  <Label fx:id="questionLabel" prefHeight="62.0" prefWidth="732.0" text="lorem ipsum banana split zeogijz egoi ezgoij zoeig jzeig if (loop) zeogijzeg oui oui" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="26.0" />
                      </font>
@@ -101,7 +104,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="fieldLabel" layoutX="682.0" text="[Matière]">
+            <Label fx:id="fieldLabel" layoutX="682.0" text="Matière">
                <font>
                   <Font size="18.0" />
                </font>
