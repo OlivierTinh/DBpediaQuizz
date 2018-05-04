@@ -44,7 +44,7 @@ class QuestionComics extends Question {
                 "  FILTER ( lang(?auteur) = 'fr' )\n" +
                 "  FILTER ( lang(?serie) = 'fr' )\n" +
                 "  FILTER ( lang(?serie) = 'fr' )\n" +
-                "}";
+                "} LIMIT 500";
     }
 
 }

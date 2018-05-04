@@ -27,9 +27,14 @@ public abstract class Question {
     private List datas;
     private QuerySolution dataLine;
 
+    /**
+     * Constructeur définissant la catégorie, le nombre de réponses et initialisant les requêtes
+     *
+     * @param categorie le nombre correspondant à la catégorie définie dans util/Constantes.java
+     */
     public Question(int categorie) {
         this.categorie = categorie;
-        this.mauvaisesReponses = new String[3];
+        this.mauvaisesReponses = new String[Constantes.NB_REPONSES - 1];
         handleRequest();
     }
 

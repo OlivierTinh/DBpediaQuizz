@@ -15,6 +15,7 @@ public abstract class Constantes {
 	public static final int SPORT = 2;
 	public static final int CINEMA = 3;
 	public static final int BANDE_DESSINEES = 4;
+	public static final int JEUX_VIDEO = 5;
 
-	public static final String[] CATEGORIES = {"Géographie", "Histoire", "Sport", "Cinéma", "Bande-dessinées"};
+	public static final String[] CATEGORIES = {"Géographie", "Histoire", "Sport", "Cinéma", "Bande dessinées", "Jeux vidéo"};
 }
