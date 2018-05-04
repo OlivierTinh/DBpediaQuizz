@@ -2,10 +2,6 @@ package fr.uha.ensisa.dbpediaquizz.fxml;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToolbar;
-import fr.uha.ensisa.dbpediaquizz.questions.Question;
-import fr.uha.ensisa.dbpediaquizz.questions.QuestionFactory;
-import fr.uha.ensisa.dbpediaquizz.util.Constantes;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,18 +12,10 @@ import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class InterfaceController implements Initializable {
 
-    private ActionEvent event;
-    private Timer timer = new Timer();
-    private final int[] timeLeft = {Constantes.TEMPS_RESTANT};
-
-    private Question question;
-    private int score = 0;
-    private int questionNumber = 0;
+    private InterfaceModel game;
 
 
     /* --- Menu Panel --- */
@@ -95,15 +83,13 @@ public class InterfaceController implements Initializable {
     @FXML
     private JFXButton gameOverExit;
 
+
     /* --- FXML Functions --- */
 
     @FXML
     void handleNewGameButton() {
-        gamePanel.setVisible(true);
-        scoreBar.setVisible(true);
-        menuPanel.setVisible(false);
-        gameOverPanel.setVisible(false);
-        startGame();
+        displayGameMenu();
+        game.start();
     }
 
     @FXML
@@ -113,15 +99,19 @@ public class InterfaceController implements Initializable {
 
     @FXML
     void handleAnswerButton(ActionEvent event) {
-        this.event = event;
-        handleAnswer();
-        handleQuestionNumber();
-        generateNewQuestion();
-        timeLeft[0] = Constantes.TEMPS_RESTANT;
+        game.handleAnswerButton(event);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        game = new InterfaceModel(this);
+        displayMenu();
+    }
+
+    /**
+     * Affiche le menu de démarrage du jeu.
+     */
+    private void displayMenu() {
         menuPanel.setVisible(true);
         gamePanel.setVisible(false);
         gameOverPanel.setVisible(false);
@@ -129,94 +119,25 @@ public class InterfaceController implements Initializable {
     }
 
     /**
-     * Lance la partie en réinitialisant les données et en générant une nouvelle question.
+     * Affiche le panel de la partie courante.
      */
-    private void startGame() {
-        resetData();
-        generateNewQuestion();
-        setScoreText(score);
-        setQuestionNumberLabel(++questionNumber);
-        startTimer();
+    private void displayGameMenu() {
+        menuPanel.setVisible(false);
+        gamePanel.setVisible(true);
+        gameOverPanel.setVisible(false);
+        scoreBar.setVisible(true);
     }
 
     /**
-     * Démarre un timer qui se décrémente de seconde en seconde.
-     * Lorsque le temps restant est nul, on passe à la prochaine question.
+     * Affiche le menu de game over.
      */
-    private void startTimer() {
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                displayTimeLeftText();
-                timeLeft[0]--;
-                if(timeLeft[0] < 0) {
-                    Platform.runLater(() -> {
-                        handleQuestionNumber();
-                        generateNewQuestion();
-                    });
-                    timeLeft[0] = Constantes.TEMPS_RESTANT;
-                }
-            }
-        }, 0, Constantes.TEMPS_RESTANT * 100);
-    }
-
-    /**
-     * Gère la fin de la partie. Affiche le panel montrant le score ainsi qu'un commentaire lié à celui-ci.
-     */
-    private void gameOver() {
-        gameOverPanel.setVisible(true);
+    void displayGameOver() {
+        menuPanel.setVisible(false);
         gamePanel.setVisible(false);
+        gameOverPanel.setVisible(true);
         scoreBar.setVisible(false);
         displayGameOverScoreLabel();
         displayGameOverCommentLabel();
-        timer.cancel();
-    }
-
-    /**
-     * Vérifie si la réponse est correcte. Si c'est le cas, on incrémente le score de 1.
-     */
-    private void handleAnswer() {
-        String answer = parseAnswer();
-        if (question.isCorrect(answer))
-            setScoreText(++score);
-    }
-
-    /**
-     * Incrémente le nombre de questions posées et le met à jour.
-     * Si on atteint le maximum, on finit la partie.
-     */
-    private void handleQuestionNumber() {
-        if (questionNumber == Constantes.NB_QUESTIONS)
-            gameOver();
-        else
-            setQuestionNumberLabel(++questionNumber);
-    }
-
-    /**
-     * On génère une nouvelle question qu'on affiche sur l'interface graphique.
-     */
-    private void generateNewQuestion() {
-        setQuestion(QuestionFactory.createQuestion());
-        question.display(this);
-    }
-
-    /**
-     * Met à zéro les données liées au jeu (score et nb de questions posées)
-     */
-    private void resetData() {
-        score = 0;
-        questionNumber = 0;
-    }
-
-    /**
-     * Retourne le texte contenu dans un bouton lors du clic.
-     * Pour cela, on effectue un remplacement de String, ce que l'on a étant de base sous la forme :
-     * JFXButton[id=answer3, styleClass=button jfx-button]'Football Club des Girondins de Bordeaux'
-     *
-     * @return la réponse en String (Football Club des Girondins de Bordeaux)
-     */
-    private String parseAnswer() {
-        return event.getSource().toString().replaceAll(".*]'(.*)'", "$1");
     }
 
     /**
@@ -258,38 +179,34 @@ public class InterfaceController implements Initializable {
      * @param answer la réponse associée au bouton
      */
     private void setColorOnClick(JFXButton answerButton, String answer) {
-        if (question.isCorrect(answer))
+        if (game.getQuestion().isCorrect(answer))
             answerButton.setRipplerFill(Paint.valueOf("LIME"));
         else
             answerButton.setRipplerFill(Paint.valueOf("RED"));
     }
 
-    public void setMatiere(String matiere) {
+    public void setField(String matiere) {
         this.fieldLabel.setText(matiere);
-    }
-
-    private void setQuestion(Question question) {
-        this.question = question;
     }
 
     public void setQuestionLabel(String question) {
         this.questionLabel.setText(question);
     }
 
-    private void setQuestionNumberLabel(int nb) {
+    void displayQuestionNumberLabel(int nb) {
         this.questionNumberLabel.setText("Question " + nb + "/10");
     }
 
-    private void setScoreText(int score) {
+    void displayScoreText(int score) {
         this.scoreText.setText("Score : " + score);
     }
 
-    private void displayTimeLeftText() {
-        this.timeLeftText.setText("Temps restant: " + timeLeft[0] + "s");
+    void displayTimeLeftText() {
+        this.timeLeftText.setText("Temps restant : " + game.getTimeLeft() + "s");
     }
 
     private void displayGameOverScoreLabel() {
-        this.gameOverScoreLabel.setText(score + "/10");
+        this.gameOverScoreLabel.setText(game.getScore() + "/10");
     }
 
     /**
@@ -297,8 +214,9 @@ public class InterfaceController implements Initializable {
      */
     private void displayGameOverCommentLabel() {
         String comment;
+        int score = game.getScore();
 
-        if (score < 3)
+        if (score < 4)
             comment = "La culture G et vous ça ne fait pas deux, n'est-ce pas ?";
         else if (score < 6)
             comment = "Pas mal, mais peut mieux faire.";

@@ -33,7 +33,7 @@ public abstract class Question {
             }
         }
 
-        controller.setMatiere(Constantes.CATEGORIES[this.categorie]);
+        controller.setField(Constantes.CATEGORIES[this.categorie]);
         controller.setQuestionLabel(this.enonce);
 
         for(choix = 0; choix < 4; ++choix) {
