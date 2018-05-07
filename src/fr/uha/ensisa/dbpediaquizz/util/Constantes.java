@@ -5,6 +5,9 @@ public abstract class Constantes {
 	public static final int MODE_CONSOLE = 0;
 	public static final int MODE_GRAPHIQUE = 1;
 
+	public static final int MODE_SOLO = 0;
+	public static final int MODE_MULTIJOUEUR = 1;
+
 	public static final int NB_QUESTIONS = 10;
 	public static final int NB_REPONSES = 4;
 

@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDialogLayout?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXToolbar?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -18,34 +19,82 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.uha.ensisa.dbpediaquizz.fxml.InterfaceController">
    <children>
-      <Pane layoutX="-6.0" layoutY="64.0" prefWidth="230.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="64.0">
+      <Pane fx:id="sidebarPanel" layoutX="-6.0" layoutY="64.0" prefWidth="230.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="64.0">
          <effect>
             <DropShadow height="15.0" radius="7.0" width="15.0" />
          </effect>
          <children>
-            <JFXButton focusTraversable="false" layoutY="134.0" prefHeight="26.0" prefWidth="230.0" text="Nouvelle partie">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </JFXButton>
+            <Pane fx:id="sidebarGamePanel" layoutX="-0.5" layoutY="14.1484375">
+               <children>
+                  <JFXButton focusTraversable="false" layoutX="0.5" layoutY="119.8515625" onAction="#handleGiveUpButton" prefHeight="26.0" prefWidth="230.0" text="Abandonner">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="20.0" top="20.0" />
+                     </padding>
+                  </JFXButton>
+                  <Text fx:id="currentPlayerNameText" layoutX="0.5" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur 1" textAlignment="CENTER" wrappingWidth="229.9999862909317">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="0.5" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Au tour de" textAlignment="CENTER" wrappingWidth="229.9999862909317">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Line endX="230.0" layoutY="90.0" stroke="#bbbbbb" />
+                  <JFXButton focusTraversable="false" layoutX="0.5" layoutY="180.8515625" onAction="#handleMenuButton" prefHeight="26.0" prefWidth="230.0" text="Retourner au menu">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="20.0" top="20.0" />
+                     </padding>
+                  </JFXButton>
+                  <JFXButton focusTraversable="false" layoutX="0.5" layoutY="241.8515625" onAction="#handleExitButton" prefHeight="26.0" prefWidth="230.0" text="Quitter">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="20.0" top="20.0" />
+                     </padding>
+                  </JFXButton>
+               </children>
+            </Pane>
             <Text layoutY="715.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Web sémantique - ensisa 2018" textAlignment="CENTER" wrappingWidth="229.9999862909317" />
             <Text layoutY="691.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Olivier TINH - Lucas GAUZIEDE" textAlignment="CENTER" wrappingWidth="229.9999862909317" />
-            <Text layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur 1" textAlignment="CENTER" wrappingWidth="229.9999862909317">
-               <font>
-                  <Font size="28.0" />
-               </font>
-            </Text>
-            <Text layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Au tour de" textAlignment="CENTER" wrappingWidth="229.9999862909317">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-            <Line endX="230.0" layoutY="100.0" stroke="#bbbbbb" />
+            <Pane fx:id="sidebarScorePanel" layoutY="349.5" visible="false">
+               <children>
+                  <Text fx:id="player1ScoreText" layoutX="-24.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur 1 : 0" textAlignment="RIGHT" wrappingWidth="229.9999862909317">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Line endX="230.0" stroke="#bbbbbb" />
+                  <Text fx:id="player2ScoreText" layoutX="-24.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur 2 : 0" textAlignment="RIGHT" wrappingWidth="229.9999862909317">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="player3ScoreText" layoutX="-24.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur 3 : 0" textAlignment="RIGHT" visible="false" wrappingWidth="229.9999862909317">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="player4ScoreText" layoutX="-24.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Joueur 4 : 0" textAlignment="RIGHT" visible="false" wrappingWidth="229.9999862909317">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
          </children>
       </Pane>
       <JFXToolbar layoutX="369.0" layoutY="14.0" prefHeight="64.0" style="-fx-background-color: #1976d2;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
-            <Label text="Qui veut gagner un pignouf ?" textFill="#e6e6e6" BorderPane.alignment="CENTER">
+            <Label text="ENSIQuizz" textFill="#e6e6e6" BorderPane.alignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>
@@ -62,7 +111,7 @@
          <padding>
             <Insets left="16.0" right="16.0" />
          </padding></JFXToolbar>
-      <Pane fx:id="gamePanel" layoutX="365.0" layoutY="164.0">
+      <Pane fx:id="gamePanel" layoutX="365.0" layoutY="164.0" visible="false">
          <children>
             <Text fx:id="timeLeftText" layoutX="375.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="8" textAlignment="CENTER">
                <font>
@@ -131,34 +180,86 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="1.0" layoutY="88.0" prefHeight="56.0" prefWidth="910.0" text="Qui veut gagner un pignouf" wrapText="true">
+            <Label alignment="CENTER" layoutX="1.0" layoutY="88.0" prefHeight="56.0" prefWidth="910.0" text="ENSIQuizz" wrapText="true">
                <font>
-                  <Font size="46.0" />
+                  <Font size="52.0" />
                </font>
             </Label>
-            <JFXButton fx:id="newGameButton" buttonType="RAISED" focusTraversable="false" layoutX="305.0" layoutY="253.0" onAction="#handleNewGameButton" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: #1976d2;" text="Nouvelle Partie" textFill="#e6e6e6">
+            <JFXButton fx:id="startSoloGameButton" buttonType="RAISED" focusTraversable="false" layoutX="306.0" layoutY="215.0" onAction="#handleNewGameButton" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: #1976d2;" text="Partie Solo" textFill="#e6e6e6">
                <font>
                   <Font size="28.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="exitButton" buttonType="RAISED" focusTraversable="false" layoutX="305.0" layoutY="360.0" onAction="#handleExitButton" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: #1976d2;" text="Quitter" textFill="#e6e6e6">
+            <JFXButton fx:id="exitButton" buttonType="RAISED" focusTraversable="false" layoutX="305.0" layoutY="415.0" onAction="#handleExitButton" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: #1976d2;" text="Quitter" textFill="#e6e6e6">
                <font>
                   <Font size="28.0" />
                </font>
             </JFXButton>
+            <JFXButton fx:id="newMultiGameButton" buttonType="RAISED" focusTraversable="false" layoutX="305.0" layoutY="315.0" onAction="#handleMultiGameSettingsButton" prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: #1976d2;" text="Partie Multi" textFill="#e6e6e6">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </JFXButton>
+            <Pane fx:id="multiplayerPanel" layoutX="87.0" layoutY="42.0" prefHeight="497.0" prefWidth="737.0" style="-fx-background-color: #ffffff;" visible="false">
+               <effect>
+                  <DropShadow height="15.0" radius="7.0" width="15.0" />
+               </effect>
+               <children>
+                  <JFXTextField fx:id="player1Field" layoutX="95.0" layoutY="136.0" prefHeight="50.0" prefWidth="200.0" promptText="Joueur 1" unFocusColor="#a8a8a8">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="player2Field" layoutX="417.0" layoutY="136.0" prefHeight="50.0" prefWidth="200.0" promptText="Joueur 2" unFocusColor="#a7a7a7">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="player3Field" layoutX="95.0" layoutY="271.0" prefHeight="50.0" prefWidth="200.0" promptText="Joueur 3 (optionnel)" unFocusColor="#a7a7a7">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="player4Field" layoutX="417.0" layoutY="271.0" prefHeight="50.0" prefWidth="200.0" promptText="Joueur 4 (optionnel)" unFocusColor="#a7a7a7">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </JFXTextField>
+                  <Text layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comment vous appelez-vous ?" textAlignment="CENTER" wrappingWidth="736.9999870657921">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Text>
+                  <JFXButton fx:id="startMultiGameButton" buttonType="RAISED" focusTraversable="false" layoutX="111.0" layoutY="420.0" onAction="#handleNewMultiGameButton" prefHeight="36.0" prefWidth="169.0" style="-fx-background-color: #1976d2;" text="Commencer" textFill="#e6e6e6">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="multiToMenuButton" buttonType="RAISED" focusTraversable="false" layoutX="417.0" layoutY="420.0" onAction="#handleMenuButton" prefHeight="36.0" prefWidth="169.0" style="-fx-background-color: ORANGE;" text="Retour au menu" textFill="#e6e6e6">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </JFXButton>
+                  <Label fx:id="invalidPlayerNameLabel" alignment="CENTER" layoutY="84.0" prefHeight="18.0" prefWidth="737.0" text="Nom obligatoire pour Joueur 1 et Joueur 2" textFill="RED" visible="false">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
          </children>
          <effect>
             <DropShadow blurType="GAUSSIAN" />
          </effect>
       </Pane>
-      <Pane fx:id="gameOverPanel" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" visible="false" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="150.0">
+      <Pane fx:id="gameOverPanel" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="150.0">
          <children>
             <Label alignment="CENTER" layoutX="202.0" layoutY="48.0" prefHeight="32.0" prefWidth="493.0" text="Partie terminée" wrapText="true">
                <font>
                   <Font size="42.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="209.0" layoutY="150.0" prefHeight="32.0" prefWidth="493.0" text="Votre score est de" wrapText="true">
+            <Label fx:id="gameOverSentenceLabel" alignment="CENTER" layoutX="-1.0" layoutY="150.0" prefHeight="40.0" prefWidth="910.0" text="Votre score est de" wrapText="true">
                <font>
                   <Font size="32.0" />
                </font>
@@ -176,14 +277,24 @@
                   <Insets left="100.0" right="100.0" />
                </padding>
             </Label>
-            <JFXButton fx:id="gameOverReplay" focusTraversable="false" layoutX="170.0" layoutY="470.0" onAction="#handleNewGameButton" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #1976d2;" text="Rejouer" textFill="#e6e6e6">
+            <JFXButton fx:id="gameOverReplay" focusTraversable="false" layoutX="120.0" layoutY="470.0" onAction="#handleNewGameButton" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #1976d2;" text="Rejouer" textFill="#e6e6e6">
                <font>
-                  <Font size="26.0" />
+                  <Font size="24.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="gameOverExit" focusTraversable="false" layoutX="550.0" layoutY="470.0" onAction="#handleExitButton" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #1976d2;" text="Quitter" textFill="#e6e6e6">
+            <JFXButton fx:id="gameOverExit" focusTraversable="false" layoutX="580.0" layoutY="470.0" onAction="#handleExitButton" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: ORANGE;" text="Quitter" textFill="#e6e6e6">
                <font>
-                  <Font size="26.0" />
+                  <Font size="24.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="gameOverMenu" focusTraversable="false" layoutX="350.0" layoutY="470.0" onAction="#handleMenuButton" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #1976d2;" text="Retour menu" textFill="#e6e6e6">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="gameOverNext" focusTraversable="false" layoutX="120.0" layoutY="470.0" onAction="#handleNextTurnButton" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #1976d2;" text="Continuer" textFill="#e6e6e6" visible="false">
+               <font>
+                  <Font size="24.0" />
                </font>
             </JFXButton>
          </children>

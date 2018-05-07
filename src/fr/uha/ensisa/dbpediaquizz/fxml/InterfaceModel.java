@@ -6,12 +6,19 @@ import fr.uha.ensisa.dbpediaquizz.util.Constantes;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 class InterfaceModel {
 
     private InterfaceController controller;
+    int mode = Constantes.MODE_SOLO;
+
+    List<Player> players = new ArrayList<>();
+    Player player;
+    int playerTurn = 0;
 
     private Timer timer;
     private final int[] timeLeft = {Constantes.TEMPS_RESTANT};
@@ -30,11 +37,45 @@ class InterfaceModel {
      * Lance la partie en réinitialisant les données et en générant une nouvelle question.
      */
     void start() {
-        resetData();
+        if (mode == Constantes.MODE_MULTIJOUEUR)
+            player = players.get(playerTurn);
+
+        reset();
         generateNewQuestion();
-        controller.displayScoreText(score);
-        controller.displayQuestionNumberLabel(++questionNumber);
         startTimer();
+    }
+
+    /**
+     * Réinitialise les données et arrête le timer.
+     */
+    void reset() {
+        score = 0;
+        questionNumber = 0;
+        if (timer != null) timer.cancel();
+    }
+
+    void resetTurn() {
+        playerTurn = 0;
+    }
+
+    /**
+     * Crée un joueur dans le cadre d'un jeu multijoueur. Ne fait rien si le paramètre est vide.
+     *
+     * @param name le nom du joueur
+     */
+    void createPlayer(String name) {
+        if (name.isEmpty()) return;
+        players.add(new Player(name));
+    }
+
+    void nextTurn() {
+        System.out.println("Next turn");
+        System.out.println(playerTurn);
+        if (playerTurn == players.size() - 1) {
+            System.out.println("Fin de la partie");
+        }
+
+        player = players.get(++playerTurn);
     }
 
     /**
@@ -60,6 +101,14 @@ class InterfaceModel {
     }
 
     /**
+     * Réinitialise le compteur de temps et réactualise son affichage.
+     */
+    private void resetTimer() {
+        timeLeft[0] = Constantes.TEMPS_RESTANT;
+        controller.displayTimeLeftText();
+    }
+
+    /**
      * Récupère la réponse en fonction du bouton cliqué, regarde si la réponse est bonne puis passe
      * à la prochaine question.
      *
@@ -69,7 +118,7 @@ class InterfaceModel {
         handleAnswer(event);
         handleQuestionNumber();
         generateNewQuestion();
-        setTimeLeft();
+        resetTimer();
     }
 
     /**
@@ -82,8 +131,14 @@ class InterfaceModel {
      */
     private void handleAnswer(ActionEvent event) {
         String answer = event.getSource().toString().replaceAll(".*]'(.*)'", "$1");
-        if (question.isCorrect(answer))
+        if (question.isCorrect(answer)) {
             controller.displayScoreText(++score);
+
+            if (mode == Constantes.MODE_MULTIJOUEUR) {
+                player.score++;
+            }
+        }
+
     }
 
     /**
@@ -92,19 +147,14 @@ class InterfaceModel {
      */
     private void handleQuestionNumber() {
         if (questionNumber == Constantes.NB_QUESTIONS) {
+            if (mode == Constantes.MODE_MULTIJOUEUR) {
+                controller.setSidebarPlayerScore();
+            }
             controller.displayGameOver();
             timer.cancel();
         } else {
             controller.displayQuestionNumberLabel(++questionNumber);
         }
-    }
-
-    /**
-     * Met à zéro les données liées au jeu (score et nb de questions posées)
-     */
-    private void resetData() {
-        score = 0;
-        questionNumber = 0;
     }
 
     /**
@@ -123,6 +173,10 @@ class InterfaceModel {
         return question;
     }
 
+    int getQuestionNumber() {
+        return ++questionNumber;
+    }
+
     private void setQuestion(Question question) {
         this.question = question;
     }
@@ -131,7 +185,8 @@ class InterfaceModel {
         return timeLeft[0];
     }
 
-    private void setTimeLeft() {
-        this.timeLeft[0] = Constantes.TEMPS_RESTANT;
+    void setMode(int mode) {
+        this.mode = mode;
     }
+
 }

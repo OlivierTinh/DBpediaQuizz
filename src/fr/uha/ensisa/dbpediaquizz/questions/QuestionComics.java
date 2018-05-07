@@ -14,7 +14,7 @@ class QuestionComics extends Question {
             setEnonce("Qui retrouve-t-on dans la série \"", "?titre", "\" ?");
             setReponse("?persoPrincipal");
         } else {
-            setEnonce("A quelle bande-dessinée appartient ", "?persoPrincipal");
+            setEnonce("A quelle bande dessinée appartient ", "?persoPrincipal");
             setReponse("?serie");
         }
     }
